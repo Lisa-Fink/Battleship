@@ -5,8 +5,8 @@ test('place a ship horizontal', () => {
   gameboard.placeShip(3, [1, 4], 'horizontal');
   expect(gameboard.getShips()[0]['coordinates']).toEqual([
     [1, 4],
-    [1, 5],
-    [1, 6],
+    [2, 4],
+    [3, 4],
   ]);
 });
 
@@ -15,9 +15,9 @@ test('place a ship vertical', () => {
   gameboard.placeShip(4, [1, 6], 'vertical');
   expect(gameboard.getShips()[0]['coordinates']).toEqual([
     [1, 6],
-    [2, 6],
-    [3, 6],
-    [4, 6],
+    [1, 7],
+    [1, 8],
+    [1, 9],
   ]);
 });
 
@@ -84,7 +84,7 @@ test('checkAllShipsSunk true', () => {
   const gameboard = createGameboard();
   gameboard.placeShip(2, [1, 6], 'vertical');
   gameboard.receiveAttack([1, 6]);
-  gameboard.receiveAttack([2, 6]);
+  gameboard.receiveAttack([1, 7]);
   expect(gameboard.checkAllShipsSunk()).toBe(true);
 });
 

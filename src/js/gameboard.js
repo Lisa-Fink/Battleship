@@ -1,7 +1,6 @@
 import createShip from './ship';
 
 const createGameboard = () => {
-  // const board = createBoard();
   const ships = [];
   const missedAttacks = [];
 
@@ -9,9 +8,9 @@ const createGameboard = () => {
     const coordinates = [];
     for (let i = 0; i < len; i++) {
       let [x, y] = location;
-      if (direction == 'horizontal') {
+      if (direction == 'vertical') {
         coordinates.push([x, y + i]);
-      } else if (direction == 'vertical') {
+      } else if (direction == 'horizontal') {
         coordinates.push([x + i, y]);
       }
     }
