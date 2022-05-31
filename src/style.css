@@ -1,0 +1,40 @@
+h1 {
+    text-align: center;
+    font-size: 60px;
+    margin: 0;
+}
+
+.box {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 3vh);
+    padding: 40px 80px;
+}
+
+.box > div {
+    font-size: 20px;
+    text-align: center;
+}
+
+.ship {
+    background-color: grey;
+}
+
+.hit {
+    color: red;
+    background-color: grey;
+}
+
+.miss {
+    color: blue;
+}
+
+.game-over {
+    position: absolute;
+    top: 30vh;
+    left: 35vw;
+    background-color: white;
+    padding: 50px 100px;
+    border: 2px black solid;
+    text-align: center;
+}

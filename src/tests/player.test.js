@@ -1,4 +1,10 @@
 import { createPlayer, createAi } from '../js/player';
+import startGame from '../js/game';
+
+jest.mock('../js/game', () => ({
+  startGame: jest.fn(),
+  gameLoop: jest.fn(),
+}));
 
 test('player attack sends function', () => {
   const player = createPlayer();

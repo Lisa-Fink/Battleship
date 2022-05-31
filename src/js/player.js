@@ -1,8 +1,11 @@
 import createGameboard from './gameboard';
-
-const createPlayer = (name = 'Larry') => {
-  const playerName = name;
+import { gameLoop } from './game';
+const createPlayer = () => {
   let ai;
+  const type = 'player';
+  const getType = () => {
+    return type;
+  };
 
   return {
     board: createGameboard(),
@@ -11,12 +14,14 @@ const createPlayer = (name = 'Larry') => {
     },
     attack(coordinates) {
       ai.board.receiveAttack(coordinates);
-      ai.turn = true;
+      gameLoop();
     },
+    getType,
   };
 };
 
 const createAi = () => {
+  const type = 'ai';
   let player;
   const prevMoves = [];
   const getAttackCoordinates = () => {
@@ -34,17 +39,24 @@ const createAi = () => {
     const choice = Math.floor(Math.random() * NumChoices);
     return possibleMoves[choice];
   };
+  const getType = () => {
+    return type;
+  };
   return {
+    turn: false,
     setPlayer(obj) {
       player = obj;
+    },
+    getPlayer() {
+      return player;
     },
     board: createGameboard(),
     attack() {
       const attackCoordinates = getAttackCoordinates();
       player.board.receiveAttack(attackCoordinates);
       prevMoves.push(attackCoordinates);
-      this.turn = false;
     },
+    getType,
   };
 };
 
