@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    color: darkgreen;
+    color: green;
     font-family: 'Courier New', Courier, monospace;
 }
 
@@ -39,7 +39,7 @@ h2 {
 }
 
 .miss {
-    color:white;
+    color:lightgreen;
 }
 
 .game-over {
@@ -92,35 +92,35 @@ form div {
 
 
 .vertical-front{
-    border-top: 3px green solid;
+    border-top: 3px rgb(61, 61, 61) solid;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
 .vertical-back {
-    border-bottom: 3px green solid;
+    border-bottom: 3px rgb(61,61,61) solid;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
 
 .horizontal-front {
-    border-left: 3px green solid;
+    border-left: 3px rgb(61,61,61) solid;
     border-bottom-left-radius: 20px;
     border-top-left-radius: 20px;
 }
 .horizontal-back {
-    border-right: 3px green solid;
+    border-right: 3px rgb(61,61,61) solid;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
 .vertical {
-    border-left: 3px green solid;
-    border-right: 3px green solid;
+    border-left: 3px rgb(61,61,61) solid;
+    border-right: 3px rgb(61,61,61) solid;
     width: 30%;
     justify-self: center;
     
 }
 
 .horizontal {
-    border-top: 3px green solid;
-    border-bottom: 3px green solid;
+    border-top: 3px rgb(61,61,61) solid;
+    border-bottom: 3px rgb(61,61,61) solid;
 }
