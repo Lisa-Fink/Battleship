@@ -30,7 +30,26 @@ const createBox = (id) => {
       box.appendChild(tile);
     }
   }
+  boardLabels(box);
   return box;
+};
+
+const boardLabels = (box) => {
+  const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'];
+  const columns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  for (let i = 1; i <= rows.length; i++) {
+    let rowTile = document.createElement('div');
+    rowTile.textContent = rows[i - 1];
+    rowTile.style = `grid-area: ${i + 1}/1/${i + 2}/2; font-weight:800`;
+    let columnTile = document.createElement('div');
+    columnTile.textContent = columns[i - 1];
+    columnTile.style = `grid-area: 1/${i + 1}/2/${i + 2}; font-weight:800`;
+    box.appendChild(rowTile);
+    box.appendChild(columnTile);
+  }
+  const corner = document.createElement('div');
+  corner.style = 'grid-area: 1/1/2/2';
+  box.appendChild(corner);
 };
 
 const processAttack = (e) => {
