@@ -19,12 +19,15 @@ h2 {
     grid-template-columns: 1fr repeat(10, 1fr);
     grid-template-rows: 2fr repeat(10, 1fr);
     padding: 40px 80px;
-    gap: 10px;
+    min-height: 35vh;
+
 }
 
 .box > div {
     font-size: 20px;
-    text-align: center;
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ship {
