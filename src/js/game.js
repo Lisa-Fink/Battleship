@@ -1,11 +1,5 @@
 import { createPlayer, createAi } from './player';
-import {
-  drawBoards,
-  drawShips,
-  updateBoard,
-  gameOver,
-  getSettings,
-} from './display';
+import { drawBoards, updateBoard, gameOver, getSettings } from './display';
 import '../style.css';
 
 let player;
