@@ -68,13 +68,6 @@ const drawShips = (playerObj) => {
     const direction =
       coordinateArr[0][0] == coordinateArr[1][0] ? 'vertical' : 'horizontal';
 
-    // coordinateArr.forEach((coordinate) => {
-    //   let tile = document.getElementById(`[${coordinate}]-player-box`);
-    //   tile.textContent = 'S';
-    //   tile.classList.add('ship');
-    //   tile.data = ship;
-    // });
-
     for (let i = 0; i < coordinateArr.length; i++) {
       let tile = document.getElementById(`[${coordinateArr[i]}]-player-box`);
       tile.textContent = 'S';
@@ -167,9 +160,15 @@ const getSettings = (playerObj) => {
 
   startBox.appendChild(form);
 
+  const randomBtn = document.createElement('button');
+  randomBtn.textContent = 'Start with Random Ships';
+  randomBtn.id = 'random';
+
   const submitBtn = document.createElement('button');
   submitBtn.textContent = 'Start Game';
+
   const submitDiv = document.createElement('div');
+  submitDiv.appendChild(randomBtn);
   submitDiv.appendChild(submitBtn);
   const submitInvalid = document.createElement('span');
   submitInvalid.id = 'submit-invalid';
@@ -289,17 +288,24 @@ const processStartForm = (() => {
 
   const validateForm = (e) => {
     e.preventDefault();
-    let isValid = true;
-    e.target.childNodes.forEach((child) => {
-      if (child.childNodes[0].className == 'ship-label invalid') {
-        isValid = false;
-      }
-    });
-    if (isValid == true) {
-      processShips(e);
+    if (e.submitter.id == 'random') {
+      e.target.data.randomShips();
+      drawShips(e.target.data);
+      const startBox = document.getElementById('start-box');
+      startBox.close();
     } else {
-      const submitInvalid = document.getElementById('submit-invalid');
-      submitInvalid.textContent = 'Invalid ships';
+      let isValid = true;
+      e.target.childNodes.forEach((child) => {
+        if (child.childNodes[0].className == 'ship-label invalid') {
+          isValid = false;
+        }
+      });
+      if (isValid == true) {
+        processShips(e);
+      } else {
+        const submitInvalid = document.getElementById('submit-invalid');
+        submitInvalid.textContent = 'Invalid ships';
+      }
     }
   };
 
