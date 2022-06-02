@@ -36,20 +36,19 @@ h2 {
 
 .hit {
     color: red;
-    background-color: grey;
 }
 
 .miss {
-    color: blue;
+    color:white;
 }
 
 .game-over {
     position: absolute;
     top: 30vh;
     left: 35vw;
-    background-color: white;
+    background-color: black;
     padding: 50px 100px;
-    border: 2px black solid;
+    border: 2px darkgreen solid;
     text-align: center;
 }
 
@@ -88,4 +87,40 @@ h2 {
 form div {
     text-align: center;
     margin-top: 30px;
+}
+
+
+
+.vertical-front{
+    border-top: 3px green solid;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.vertical-back {
+    border-bottom: 3px green solid;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.horizontal-front {
+    border-left: 3px green solid;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.horizontal-back {
+    border-right: 3px green solid;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+.vertical {
+    border-left: 3px green solid;
+    border-right: 3px green solid;
+    width: 30%;
+    justify-self: center;
+    
+}
+
+.horizontal {
+    border-top: 3px green solid;
+    border-bottom: 3px green solid;
 }

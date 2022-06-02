@@ -65,12 +65,30 @@ const drawShips = (playerObj) => {
   const ships = playerObj.board.getShips();
   for (let ship of ships) {
     let coordinateArr = ship.coordinates;
-    coordinateArr.forEach((coordinate) => {
-      let tile = document.getElementById(`[${coordinate}]-player-box`);
+    const direction =
+      coordinateArr[0][0] == coordinateArr[1][0] ? 'vertical' : 'horizontal';
+
+    // coordinateArr.forEach((coordinate) => {
+    //   let tile = document.getElementById(`[${coordinate}]-player-box`);
+    //   tile.textContent = 'S';
+    //   tile.classList.add('ship');
+    //   tile.data = ship;
+    // });
+
+    for (let i = 0; i < coordinateArr.length; i++) {
+      let tile = document.getElementById(`[${coordinateArr[i]}]-player-box`);
       tile.textContent = 'S';
       tile.classList.add('ship');
       tile.data = ship;
-    });
+      tile.classList.add(direction);
+
+      if (i == 0) {
+        tile.classList.add(`${direction}-front`);
+      }
+      if (i == coordinateArr.length - 1) {
+        tile.classList.add(`${direction}-back`);
+      }
+    }
   }
 };
 
