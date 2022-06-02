@@ -38,3 +38,27 @@ h1 {
     border: 2px black solid;
     text-align: center;
 }
+
+
+.ship-label {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr 1fr 1fr;
+    gap:5px;
+}
+
+.ship-label span {
+    font-size: 10px;
+}
+
+.invalid span{
+    color: red;
+}
+
+#submit-invalid {
+    color: red;
+    margin-left: 10px;
+}
+
+.valid span {
+    color: green;
+}

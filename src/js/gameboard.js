@@ -4,22 +4,22 @@ const createGameboard = () => {
   const ships = [];
   const missedAttacks = [];
 
-  const getCoordinates = (len, location, direction) => {
-    const coordinates = [];
-    for (let i = 0; i < len; i++) {
-      let [x, y] = location;
-      if (direction == 'vertical') {
-        coordinates.push([x, y + i]);
-      } else if (direction == 'horizontal') {
-        coordinates.push([x + i, y]);
-      }
-    }
-    return coordinates;
-  };
   return {
+    getCoordinates(len, location, direction) {
+      const coordinates = [];
+      for (let i = 0; i < len; i++) {
+        let [x, y] = location;
+        if (direction == 'vertical') {
+          coordinates.push([x, y + i]);
+        } else if (direction == 'horizontal') {
+          coordinates.push([x + i, y]);
+        }
+      }
+      return coordinates;
+    },
     placeShip(len, location, direction) {
       const ship = createShip(len);
-      const coordinates = getCoordinates(len, location, direction);
+      const coordinates = this.getCoordinates(len, location, direction);
       ships.push({ ship, coordinates });
     },
     receiveAttack(coordinates) {
@@ -69,17 +69,5 @@ const createGameboard = () => {
     },
   };
 };
-
-// const createBoard = () => {
-//   const board = [];
-//   for (let i = 0; i < 10; i++) {
-//     let row = [];
-//     for (let j = 0; j < 10; j++) {
-//       row.push('0');
-//     }
-//     board.push(row);
-//   }
-//   return board;
-// };
 
 export default createGameboard;

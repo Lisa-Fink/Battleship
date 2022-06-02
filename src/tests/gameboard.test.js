@@ -40,6 +40,12 @@ test('checkShipLocations not hitting ship', () => {
   expect(gameboard.checkShipLocations([5, 9])).toEqual(false);
 });
 
+test('checkShipLocations no ships', () => {
+  // when ai is placing first ship
+  const gameboard = createGameboard();
+  expect(gameboard.checkShipLocations([0, 0])).toBe(false);
+});
+
 test('sendHitToShip', () => {
   const gameboard = createGameboard();
   const mockFunction = jest.fn();

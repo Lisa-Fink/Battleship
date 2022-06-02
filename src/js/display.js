@@ -106,4 +106,198 @@ const gameOver = (winner) => {
   document.body.appendChild(gameOverDiv);
 };
 
-export { drawBoards, drawShips, updateBoard, gameOver };
+const getSettings = (playerObj) => {
+  const startBox = document.createElement('dialog');
+  startBox.id = 'start-box';
+  document.body.appendChild(startBox);
+
+  const welcomeH2 = document.createElement('h2');
+  welcomeH2.textContent = 'Welcome to BATTLESHIP';
+  const welcomeText = document.createElement('p');
+  welcomeText.textContent = 'Place your battleships:';
+
+  startBox.appendChild(welcomeH2);
+  startBox.appendChild(welcomeText);
+
+  const form = document.createElement('form');
+  form.data = playerObj;
+  form.method = 'dialog';
+  form.appendChild(createShip('Carrier', 5));
+  form.appendChild(createShip('Battleship', 4));
+  form.appendChild(createShip('Cruiser', 3));
+  form.appendChild(createShip('Submarine', 3));
+  form.appendChild(createShip('Destroyer', 2));
+
+  startBox.appendChild(form);
+
+  const submitBtn = document.createElement('button');
+  submitBtn.textContent = 'Start Game';
+  const submitDiv = document.createElement('div');
+  submitDiv.appendChild(submitBtn);
+  const submitInvalid = document.createElement('span');
+  submitInvalid.id = 'submit-invalid';
+  submitInvalid.className = 'invalid';
+  submitDiv.appendChild(submitInvalid);
+
+  form.appendChild(submitDiv);
+  form.addEventListener('submit', processStartForm.validateForm);
+
+  startBox.showModal();
+};
+
+const createShip = (name, length) => {
+  const ship = document.createElement('p');
+  const shipLabel = document.createElement('label');
+  shipLabel.className = 'ship-label invalid';
+  shipLabel.data = length;
+  shipLabel.id = name;
+  shipLabel.textContent = `${name} - ${length} holes: `;
+
+  shipLabel.appendChild(createSelect('direction', ['horizontal', 'vertical']));
+
+  shipLabel.appendChild(
+    createSelect('A-Z', ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'])
+  );
+  shipLabel.appendChild(createSelect('1-10', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+
+  const validateBox = document.createElement('span');
+
+  shipLabel.appendChild(validateBox);
+
+  ship.appendChild(shipLabel);
+
+  return ship;
+};
+
+const createSelect = (defaultText, options) => {
+  const select = document.createElement('select');
+  select.name = defaultText;
+  select.required = true;
+  const defaultOption = document.createElement('option');
+  defaultOption.value = 'default';
+  defaultOption.textContent = `${defaultText}...`;
+  select.appendChild(defaultOption);
+
+  options.forEach((option) => {
+    let newOption = document.createElement('option');
+    newOption.textContent = option;
+    select.appendChild(newOption);
+  });
+  select.addEventListener('change', processStartForm.validateSelections);
+  return select;
+};
+
+const processStartForm = (() => {
+  const tempShips = {
+    Carrier: [],
+    Battleship: [],
+    Cruiser: [],
+    Submarine: [],
+    Destroyer: [],
+  };
+
+  const validateSelections = (e) => {
+    const label = e.target.parentElement;
+    const shipLen = e.target.parentElement.data;
+    const direction = e.target.parentElement.children.direction.value;
+    const x = Number(e.target.parentElement.children['1-10'].value) - 1;
+    const y = convertToNum(e.target.parentElement.children['A-Z'].value);
+    const validateBox = e.target.parentElement.children[3];
+    const shipName = e.target.parentElement.id;
+    const player = e.target.form.data;
+
+    tempShips[shipName] = [];
+
+    if (
+      (direction == 'horizontal' && x + shipLen - 1 > 9) |
+      (direction == 'vertical' && y + shipLen - 1 > 9)
+    ) {
+      label.className = 'ship-label invalid';
+      validateBox.innerText = 'X not enough space';
+    } else if ((direction == 'default') | (!x && x != 0) | (y == undefined)) {
+      label.className = 'ship-label invalid';
+      validateBox.innerText = 'X need all selections';
+    } else {
+      // check for ship collision
+      const shipCoords = player.board.getCoordinates(
+        shipLen,
+        [x, y],
+        direction
+      );
+      const isSpaceAvailable = checkCollision(shipCoords);
+
+      if (isSpaceAvailable) {
+        label.className = 'ship-label valid';
+        validateBox.innerText = 'valid';
+        shipCoords.forEach((coord) =>
+          tempShips[shipName].push(JSON.stringify(coord))
+        );
+      } else {
+        label.className = 'ship-label invalid';
+        validateBox.innerText = 'X space unavailable';
+      }
+    }
+  };
+  const checkCollision = (coords) => {
+    for (let keys in tempShips) {
+      for (let i = 0; i < coords.length; i++) {
+        let strCoord = JSON.stringify(coords[i]);
+        if (tempShips[keys].includes(strCoord)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const validateForm = (e) => {
+    e.preventDefault();
+    let isValid = true;
+    e.target.childNodes.forEach((child) => {
+      if (child.childNodes[0].className == 'ship-label invalid') {
+        isValid = false;
+      }
+    });
+    if (isValid == true) {
+      processShips(e);
+    } else {
+      const submitInvalid = document.getElementById('submit-invalid');
+      submitInvalid.textContent = 'Invalid ships';
+    }
+  };
+
+  const processShips = (e) => {
+    const player = e.target.data;
+    for (let i = 0; i < 13; i += 3) {
+      let len = i == 0 ? 5 : i == 3 ? 4 : i == 12 ? 2 : 3;
+      let direction = e.target[i].value;
+      let x = Number(e.target[i + 2].value - 1);
+      let y = convertToNum(e.target[i + 1].value);
+      let coordinates = [x, y];
+      player.board.placeShip(len, coordinates, direction);
+      drawShips(player);
+      const startBox = document.getElementById('start-box');
+      startBox.close();
+    }
+  };
+
+  const convertToNum = (letter) => {
+    const keys = {
+      A: 0,
+      B: 1,
+      C: 2,
+      D: 3,
+      E: 4,
+      F: 5,
+      G: 6,
+      H: 7,
+      I: 8,
+      J: 9,
+    };
+    return keys[letter];
+  };
+
+  return { validateForm, validateSelections };
+})();
+
+export { drawBoards, drawShips, updateBoard, gameOver, getSettings };

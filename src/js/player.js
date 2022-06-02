@@ -42,8 +42,8 @@ const createAi = () => {
   const getType = () => {
     return type;
   };
+
   return {
-    turn: false,
     setPlayer(obj) {
       player = obj;
     },
@@ -56,7 +56,38 @@ const createAi = () => {
       player.board.receiveAttack(attackCoordinates);
       prevMoves.push(attackCoordinates);
     },
+
     getType,
+    getNewShipInfo(len) {
+      let validLocation = [];
+      let coordinate;
+      let maxX = 10;
+      let maxY = 10;
+      const direction =
+        Math.floor(Math.random() * 2) == 0 ? 'vertical' : 'horizontal';
+
+      direction == 'vertical' ? (maxY -= len - 1) : (maxX -= len - 1);
+
+      do {
+        let x = Math.floor(Math.random() * maxX);
+        let y = Math.floor(Math.random() * maxY);
+        coordinate = [x, y];
+
+        let coordinates = this.board.getCoordinates(len, coordinate, direction);
+        validLocation = coordinates.filter((coord) => {
+          return !this.board.checkShipLocations(coord) == false;
+        });
+      } while (validLocation.length);
+
+      return [len, coordinate, direction];
+    },
+    placeShips() {
+      this.board.placeShip(...this.getNewShipInfo(5));
+      this.board.placeShip(...this.getNewShipInfo(4));
+      this.board.placeShip(...this.getNewShipInfo(3));
+      this.board.placeShip(...this.getNewShipInfo(3));
+      this.board.placeShip(...this.getNewShipInfo(2));
+    },
   };
 };
 
