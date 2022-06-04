@@ -55,6 +55,7 @@ const createGameboard = () => {
     },
 
     checkShipLocations(attackLoc) {
+      console.log(attackLoc);
       for (let shipInfo of ships) {
         const match = shipInfo['coordinates'].filter((a) => {
           let [x, y] = a;

@@ -245,6 +245,7 @@ const createAi = () => {
       const attackCoordinates = getAttackCoordinates();
       player.board.receiveAttack(attackCoordinates);
       prevMoves.push(attackCoordinates);
+      console.log(attackCoordinates);
     },
 
     getType,
