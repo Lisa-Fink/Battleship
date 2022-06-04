@@ -27,10 +27,13 @@ const createGameboard = () => {
 
       if (hitShip) {
         this.sendHitToShip(hitShip['ship'], coordinates);
+        this.shipHit = coordinates;
       } else {
         this.missedAttack(coordinates);
+        this.shipHit = false;
       }
     },
+    shipHit: false,
 
     missedAttack(coordinates) {
       missedAttacks.push(coordinates);
@@ -52,6 +55,7 @@ const createGameboard = () => {
     },
 
     checkShipLocations(attackLoc) {
+      console.log(attackLoc);
       for (let shipInfo of ships) {
         const match = shipInfo['coordinates'].filter((a) => {
           let [x, y] = a;
