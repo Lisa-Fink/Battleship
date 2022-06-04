@@ -100,3 +100,17 @@ test('checkAllShipsSunk false', () => {
   gameboard.receiveAttack([1, 6]);
   expect(gameboard.checkAllShipsSunk()).toBe(false);
 });
+
+test('shipHit stores hit when attacked', () => {
+  const gameboard = createGameboard();
+  gameboard.placeShip(2, [9, 6], 'vertical');
+  gameboard.receiveAttack([9, 6]);
+  expect(gameboard.shipHit).toEqual([9, 6]);
+});
+
+test("shipHit doesn't store hit when attack misses", () => {
+  const gameboard = createGameboard();
+  gameboard.placeShip(2, [9, 6], 'vertical');
+  gameboard.receiveAttack([8, 6]);
+  expect(gameboard.shipHit).toEqual(false);
+});

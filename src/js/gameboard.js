@@ -27,10 +27,13 @@ const createGameboard = () => {
 
       if (hitShip) {
         this.sendHitToShip(hitShip['ship'], coordinates);
+        this.shipHit = coordinates;
       } else {
         this.missedAttack(coordinates);
+        this.shipHit = false;
       }
     },
+    shipHit: false,
 
     missedAttack(coordinates) {
       missedAttacks.push(coordinates);

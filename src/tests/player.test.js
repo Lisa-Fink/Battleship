@@ -151,3 +151,17 @@ test("ai placed ships don't go over edges", () => {
   expect(Math.max(...checkAnyCoordinate)).toBeLessThan(10);
   jest.spyOn(global.Math, 'random').mockRestore();
 });
+
+test('ai hits ship then next attack is first smart attack', () => {
+  const ai = createAi();
+  const player = createPlayer();
+  ai.setPlayer(player);
+
+  const mockFunction = jest.fn();
+  player.board.receiveAttack = mockFunction;
+
+  player.board.shipHit = [1, 6];
+  ai.attack();
+
+  expect(mockFunction).toHaveBeenCalledWith([2, 6]);
+});
