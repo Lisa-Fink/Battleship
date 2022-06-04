@@ -53,8 +53,12 @@ const boardLabels = (box) => {
 };
 
 const processAttack = (e) => {
-  // make sure wasn't already attacked
-  if (!e.target.parentElement.data.turn) {
+  // make sure wasn't already attacked + correct turn
+  const coordinates = e.target.id.match(/\d/g);
+  const previousAttack = e.target.parentElement.data
+    .getPlayer()
+    .inPrevious(coordinates);
+  if (!previousAttack && !e.target.parentElement.data.turn) {
     const coordinates = e.target.id.match(/\d/g);
     // sends the attack
     e.target.parentElement.data.getPlayer().attack(coordinates);

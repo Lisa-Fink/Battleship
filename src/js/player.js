@@ -6,14 +6,25 @@ const createPlayer = () => {
   const getType = () => {
     return type;
   };
+  const prevAttacks = [];
 
   return {
+    inPrevious([x, y]) {
+      for (let i = 0; i < prevAttacks.length; i++) {
+        let [a, b] = prevAttacks[i];
+        if (a == x && b == y) {
+          return true;
+        }
+      }
+      return false;
+    },
     board: createGameboard(),
     setOpponent(obj) {
       ai = obj;
     },
     attack(coordinates) {
       ai.board.receiveAttack(coordinates);
+      prevAttacks.push(coordinates);
       gameLoop();
     },
     getType,
