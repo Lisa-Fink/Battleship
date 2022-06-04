@@ -233,10 +233,7 @@ describe('confirmed right but next hit would be off board', () => {
 
   test('next attack would be left', () => {
     const answer = smartAttack();
-<<<<<<< HEAD
-=======
-    console.log(answer);
->>>>>>> refs/remotes/origin/main
+
     expect(answer).toEqual([7, 0]);
   });
 });
